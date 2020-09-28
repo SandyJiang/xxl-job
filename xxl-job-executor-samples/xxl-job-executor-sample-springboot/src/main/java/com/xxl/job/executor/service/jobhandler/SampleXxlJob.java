@@ -237,6 +237,7 @@ public class SampleXxlJob {
         for(int i=0; i<8;i++){
             pool.submit(() -> {
                 for(int j=0; j<10000; j++){
+                    XxlJobLogger.log("beat at:" + j);
                     System.out.println("hello");
                 }
             });
