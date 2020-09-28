@@ -301,6 +301,49 @@ $(function() {
 	});
 
 	/**
+	 * log Kill
+	 */
+	$('#joblog_list').on('click', '.logStop', function(){
+		var _id = $(this).attr('_id');
+
+		layer.confirm( (I18n.system_ok + I18n.joblog_stop_log + '?'), {
+			icon: 3,
+			title: I18n.system_tips ,
+			btn: [ I18n.system_ok, I18n.system_cancel ]
+		}, function(index){
+			layer.close(index);
+
+			$.ajax({
+				type : 'POST',
+				url : base_url + '/joblog/logKill',
+				data : {"id":_id,"stopFlag":true},
+				dataType : "json",
+				success : function(data){
+					if (data.code == 200) {
+						layer.open({
+							title: I18n.system_tips,
+							btn: [ I18n.system_ok ],
+							content: I18n.system_opt_suc ,
+							icon: '1',
+							end: function(layero, index){
+								logTable.fnDraw();
+							}
+						});
+					} else {
+						layer.open({
+							title: I18n.system_tips,
+							btn: [ I18n.system_ok ],
+							content: (data.msg || I18n.system_opt_fail ),
+							icon: '2'
+						});
+					}
+				},
+			});
+		});
+
+	});
+
+	/**
 	 * clear Log
 	 */
 	$('#clearLog').on('click', function(){

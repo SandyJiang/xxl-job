@@ -193,7 +193,17 @@ public class XxlJobExecutor  {
         if (oldJobThread != null) {
             oldJobThread.toStop(removeOldReason);
             oldJobThread.interrupt();
+            return oldJobThread;
+        }
+        return null;
+    }
 
+    public static JobThread stopJobThread(int jobId, String removeOldReason){
+        JobThread oldJobThread = jobThreadRepository.remove(jobId);
+        if (oldJobThread != null) {
+            oldJobThread.toStop(removeOldReason);
+            oldJobThread.interrupt();
+            oldJobThread.stop();
             return oldJobThread;
         }
         return null;

@@ -159,7 +159,7 @@ public class JobThread extends Thread{
 								(executeResult!=null&&executeResult.getMsg()!=null&&executeResult.getMsg().length()>50000)
 										?executeResult.getMsg().substring(0, 50000).concat("...")
 										:executeResult.getMsg());
-						executeResult.setContent(null);	// limit obj size
+						//executeResult.setContent(null);	// limit obj size
 					}
 					XxlJobLogger.log("<br>----------- xxl-job job execute end(finish) -----------<br>----------- ReturnT:" + executeResult);
 

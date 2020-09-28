@@ -161,6 +161,18 @@ public class ExecutorBizImpl implements ExecutorBiz {
     }
 
     @Override
+    public ReturnT<String> stop(KillParam killParam) {
+        // kill handlerThread, and create new one
+        JobThread jobThread = XxlJobExecutor.loadJobThread(killParam.getJobId());
+        if (jobThread != null) {
+            XxlJobExecutor.stopJobThread(killParam.getJobId(), "scheduling center stop job.");
+            return ReturnT.SUCCESS;
+        }
+
+        return new ReturnT<String>(ReturnT.SUCCESS_CODE, "job thread already stoped.");
+    }
+
+    @Override
     public ReturnT<LogResult> log(LogParam logParam) {
         // log filename: logPath/yyyy-MM-dd/9999.log
         String logFileName = XxlJobFileAppender.makeLogFileName(new Date(logParam.getLogDateTim()), logParam.getLogId());

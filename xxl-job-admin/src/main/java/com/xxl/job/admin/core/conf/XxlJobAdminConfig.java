@@ -67,6 +67,9 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
     @Value("${xxl.job.logretentiondays}")
     private int logretentiondays;
 
+    @Value("${xxl.job.url}")
+    private String xxlJobUrl;
+
     // dao, service
 
     @Resource
@@ -155,4 +158,11 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
         return jobAlarmer;
     }
 
+    public String getXxlJobUrl() {
+        return xxlJobUrl;
+    }
+
+    public void setXxlJobUrl(String xxlJobUrl) {
+        this.xxlJobUrl = xxlJobUrl;
+    }
 }

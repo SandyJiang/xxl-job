@@ -20,6 +20,7 @@ public class XxlJobInfo {
 	
 	private String author;		// 负责人
 	private String alarmEmail;	// 报警邮件
+	private String feiShuUrl; //飞书报警url
 
 	private String executorRouteStrategy;	// 执行器路由策略
 	private String executorHandler;		    // 执行器，任务Handler名称
@@ -214,5 +215,13 @@ public class XxlJobInfo {
 
 	public void setTriggerNextTime(long triggerNextTime) {
 		this.triggerNextTime = triggerNextTime;
+	}
+
+	public String getFeiShuUrl() {
+		return feiShuUrl;
+	}
+
+	public void setFeiShuUrl(String feiShuUrl) {
+		this.feiShuUrl = feiShuUrl;
 	}
 }

@@ -202,6 +202,9 @@ public class EmbedServer {
                 } else if ("/kill".equals(uri)) {
                     KillParam killParam = GsonTool.fromJson(requestData, KillParam.class);
                     return executorBiz.kill(killParam);
+                } else if ("/stop".equals(uri)) {
+                    KillParam killParam = GsonTool.fromJson(requestData, KillParam.class);
+                    return executorBiz.stop(killParam);
                 } else if ("/log".equals(uri)) {
                     LogParam logParam = GsonTool.fromJson(requestData, LogParam.class);
                     return executorBiz.log(logParam);

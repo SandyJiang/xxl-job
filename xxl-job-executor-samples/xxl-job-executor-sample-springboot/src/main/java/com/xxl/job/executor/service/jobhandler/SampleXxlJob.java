@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * XxlJob开发示例（Bean模式）
@@ -40,12 +40,19 @@ public class SampleXxlJob {
     public ReturnT<String> demoJobHandler(String param) throws Exception {
         XxlJobLogger.log("XXL-JOB, Hello World.");
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5000000; i++) {
+            if(Thread.currentThread().isInterrupted() == true){
+               break;
+            }
+
             XxlJobLogger.log("beat at:" + i);
-            TimeUnit.SECONDS.sleep(2);
+            System.out.println("hello");
+
         }
+        System.out.println("hello!!!!");
         return ReturnT.SUCCESS;
     }
+
 
 
     /**
@@ -216,19 +223,40 @@ public class SampleXxlJob {
         }
 
     }
-
+    private static ThreadPoolExecutor pool = null;
     /**
      * 5、生命周期任务示例：任务初始化与销毁时，支持自定义相关逻辑；
      */
     @XxlJob(value = "demoJobHandler2", init = "init", destroy = "destroy")
     public ReturnT<String> demoJobHandler2(String param) throws Exception {
         XxlJobLogger.log("XXL-JOB, Hello World.");
+        for(int i=0; i<8;i++){
+            pool.submit(() -> {
+                for(int j=0; j<1000000; j++){
+                    System.out.println("hello");
+                }
+            });
+
+        }
+        boolean done = false;
+        do{
+            if(Thread.currentThread().isInterrupted()){
+                break;
+            }
+            done = pool.getTaskCount() == pool.getCompletedTaskCount();
+        }while (!done);
+
         return ReturnT.SUCCESS;
     }
     public void init(){
+        pool = new ThreadPoolExecutor(5, 10, 5000,
+                TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(1000),
+                Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
         logger.info("init");
     }
     public void destroy(){
+        pool.shutdownNow();
+        pool = null;
         logger.info("destory");
     }
 

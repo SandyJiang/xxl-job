@@ -158,7 +158,7 @@ public class JobLogController {
 
 	@RequestMapping("/logKill")
 	@ResponseBody
-	public ReturnT<String> logKill(int id){
+	public ReturnT<String> logKill(int id, Boolean stopFlag){
 		// base check
 		XxlJobLog log = xxlJobLogDao.load(id);
 		XxlJobInfo jobInfo = xxlJobInfoDao.loadById(log.getJobId());
@@ -173,7 +173,14 @@ public class JobLogController {
 		ReturnT<String> runResult = null;
 		try {
 			ExecutorBiz executorBiz = XxlJobScheduler.getExecutorBiz(log.getExecutorAddress());
-			runResult = executorBiz.kill(new KillParam(jobInfo.getId()));
+
+
+			if(stopFlag != null && stopFlag ==true){
+				runResult = executorBiz.stop(new KillParam(jobInfo.getId()));
+			}else{
+				runResult = executorBiz.kill(new KillParam(jobInfo.getId()));
+			}
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			runResult = new ReturnT<String>(500, e.getMessage());

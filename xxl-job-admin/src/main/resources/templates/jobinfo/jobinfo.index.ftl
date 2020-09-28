@@ -87,6 +87,7 @@
 					                  	<th name="updateTime" >updateTime</th>
 					                  	<th name="author" >${I18n.jobinfo_field_author}</th>
 					                  	<th name="alarmEmail" >${I18n.jobinfo_field_alarmemail}</th>
+                                        <th name="feiShuUrl" >${I18n.jobinfo_field_feishuurl}</th>
 					                  	<th name="triggerStatus" >${I18n.system_status}</th>
 					                  	<th>${I18n.system_opt}</th>
 					                </tr>
@@ -174,6 +175,10 @@
                         <label for="lastname" class="col-sm-2 control-label">${I18n.jobinfo_field_alarmemail}<font color="black">*</font></label>
                         <div class="col-sm-4"><input type="text" class="form-control" name="alarmEmail" placeholder="${I18n.jobinfo_field_alarmemail_placeholder}" maxlength="100" ></div>
 					</div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-2 control-label">${I18n.jobinfo_field_feishuurl}<font color="black">*</font></label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="feiShuUrl" placeholder="${I18n.jobinfo_field_feishuurl_placeholder}" maxlength="100" ></div>
+                    </div>
                     <div class="form-group">
                         <label for="firstname" class="col-sm-2 control-label">${I18n.jobinfo_field_executorparam}<font color="black">*</font></label>
                         <div class="col-sm-10">
@@ -369,6 +374,10 @@ exit 0
                         <div class="col-sm-4"><input type="text" class="form-control" name="author" placeholder="${I18n.system_please_input}${I18n.jobinfo_field_author}" maxlength="50" ></div>
                         <label for="lastname" class="col-sm-2 control-label">${I18n.jobinfo_field_alarmemail}<font color="black">*</font></label>
                         <div class="col-sm-4"><input type="text" class="form-control" name="alarmEmail" placeholder="${I18n.jobinfo_field_alarmemail_placeholder}" maxlength="100" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-2 control-label">${I18n.jobinfo_field_feishuurl}<font color="black">*</font></label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="feiShuUrl" placeholder="${I18n.jobinfo_field_feishuurl_placeholder}" maxlength="100" ></div>
                     </div>
                     <div class="form-group">
                         <label for="firstname" class="col-sm-2 control-label">${I18n.jobinfo_field_executorparam}<font color="black">*</font></label>

@@ -36,6 +36,13 @@ public interface ExecutorBiz {
     public ReturnT<String> kill(KillParam killParam);
 
     /**
+     * kill
+     * @param killParam
+     * @return
+     */
+    public ReturnT<String> stop(KillParam killParam);
+
+    /**
      * log
      * @param logParam
      * @return
