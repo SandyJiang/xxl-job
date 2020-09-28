@@ -63,10 +63,6 @@ public class FeiShuJobAlarm implements JobAlarm {
             alarmContent += " HandleCode=" + jobLog.getHandleMsg();
         }
 
-        if(StringUtils.isNotBlank(jobLog.getTriggerMsg())){
-            alarmContent.replaceAll("<br>", " ");
-        }
-
 
         try {
             String feiShuUrl = info.getFeiShuUrl();
@@ -79,6 +75,11 @@ public class FeiShuJobAlarm implements JobAlarm {
                     alarmContent = alarmContent.substring(0, 500);
                 }
             }
+
+            if(StringUtils.isNotBlank(alarmContent)){
+                alarmContent.replaceAll("<br>", " ");
+            }
+
             XxlJobGroup group = XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().load(Integer.valueOf(info.getJobGroup()));
             String groupName = group!=null?group.getTitle():"null";
             String alertType = " 告警类型:"+I18nUtil.getString("jobconf_monitor_alarm_type");

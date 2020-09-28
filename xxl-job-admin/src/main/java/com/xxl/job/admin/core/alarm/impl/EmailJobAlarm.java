@@ -49,7 +49,7 @@ public class EmailJobAlarm implements JobAlarm {
                 alarmContent += " HandleCode=" + jobLog.getHandleMsg();
             }
 
-            if(StringUtils.isNotBlank(jobLog.getTriggerMsg())){
+            if(StringUtils.isNotBlank(alarmContent)){
                 alarmContent.replaceAll("<br>", " ");
             }
 
