@@ -41,9 +41,8 @@ public class XxlJobLogger {
         String logFileName = XxlJobFileAppender.contextHolder.get();
         if (logFileName!=null && logFileName.trim().length()>0) {
             XxlJobFileAppender.appendLog(logFileName, formatAppendLog);
-        } else {
-            logger.info(">>>>>>>>>>> {}", formatAppendLog);
         }
+        logger.info(">>>>>>>>>>> {}", formatAppendLog);
     }
 
     /**
