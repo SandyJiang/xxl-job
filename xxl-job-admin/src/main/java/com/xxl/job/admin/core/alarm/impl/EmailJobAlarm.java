@@ -49,9 +49,6 @@ public class EmailJobAlarm implements JobAlarm {
                 alarmContent += " HandleCode=" + jobLog.getHandleMsg();
             }
 
-            if(StringUtils.isNotBlank(alarmContent)){
-                alarmContent.replaceAll("<br>", " ");
-            }
 
             // email info
             XxlJobGroup group = XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().load(Integer.valueOf(info.getJobGroup()));

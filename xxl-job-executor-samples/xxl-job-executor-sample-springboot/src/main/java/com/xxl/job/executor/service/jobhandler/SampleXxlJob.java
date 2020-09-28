@@ -41,7 +41,8 @@ public class SampleXxlJob {
         XxlJobLogger.log("XXL-JOB, Hello World.");
 
         for (int i = 0; i < 5000000; i++) {
-            if(Thread.currentThread().isInterrupted() == true){
+            //使用interrupt打断就得在循环里判断标识
+            if(Thread.currentThread().isInterrupted()){
                break;
             }
 
@@ -60,6 +61,8 @@ public class SampleXxlJob {
      */
     @XxlJob("shardingJobHandler")
     public ReturnT<String> shardingJobHandler(String param) throws Exception {
+
+        //获取执行总数在redis取吧.
 
         // 分片参数
         ShardingUtil.ShardingVO shardingVO = ShardingUtil.getShardingVo();
@@ -226,13 +229,14 @@ public class SampleXxlJob {
     private static ThreadPoolExecutor pool = null;
     /**
      * 5、生命周期任务示例：任务初始化与销毁时，支持自定义相关逻辑；
+     * 线程池示例
      */
     @XxlJob(value = "demoJobHandler2", init = "init", destroy = "destroy")
     public ReturnT<String> demoJobHandler2(String param) throws Exception {
         XxlJobLogger.log("XXL-JOB, Hello World.");
         for(int i=0; i<8;i++){
             pool.submit(() -> {
-                for(int j=0; j<1000000; j++){
+                for(int j=0; j<10000; j++){
                     System.out.println("hello");
                 }
             });
@@ -240,12 +244,13 @@ public class SampleXxlJob {
         }
         boolean done = false;
         do{
+            //使用interrupt打断就得在循环里判断标识
             if(Thread.currentThread().isInterrupted()){
                 break;
             }
             done = pool.getTaskCount() == pool.getCompletedTaskCount();
         }while (!done);
-
+        System.out.println("任务结束");
         return ReturnT.SUCCESS;
     }
     public void init(){

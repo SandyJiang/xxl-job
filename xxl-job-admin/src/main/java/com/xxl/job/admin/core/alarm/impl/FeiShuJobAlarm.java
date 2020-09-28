@@ -71,13 +71,13 @@ public class FeiShuJobAlarm implements JobAlarm {
                         .replaceAll("\\t", "")
                         .replaceAll("\\r", "")
                         .replaceAll("\"", "'");
-                if( alarmContent.length() > 500){
-                    alarmContent = alarmContent.substring(0, 500);
-                }
             }
 
             if(StringUtils.isNotBlank(alarmContent)){
-                alarmContent.replaceAll("<br>", " ");
+                alarmContent = alarmContent.replaceAll("<br>", " ");
+                if( alarmContent.length() > 500){
+                    alarmContent = alarmContent.substring(0, 500);
+                }
             }
 
             XxlJobGroup group = XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().load(Integer.valueOf(info.getJobGroup()));
