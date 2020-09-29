@@ -226,7 +226,9 @@ public class SampleXxlJob {
         }
 
     }
-    private static ThreadPoolExecutor pool = null;
+
+
+    private volatile static ThreadPoolExecutor pool = null;
     /**
      * 5、生命周期任务示例：任务初始化与销毁时，支持自定义相关逻辑；
      * 线程池示例
@@ -255,9 +257,11 @@ public class SampleXxlJob {
         return ReturnT.SUCCESS;
     }
     public void init(){
-        pool = new ThreadPoolExecutor(5, 10, 5000,
-                TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(1000),
-                Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
+        if(pool == null){
+            pool = new ThreadPoolExecutor(5, 10, 5000,
+                    TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(1000),
+                    Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
+        }
         logger.info("init");
     }
     public void destroy(){
