@@ -259,7 +259,7 @@ public class SampleXxlJob {
     public void init(){
         if(pool == null || pool.isTerminated()){
             pool = new ThreadPoolExecutor(5, 10, 5000,
-                    TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(1000),
+                    TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(),
                     Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
         }
         logger.info("init");
