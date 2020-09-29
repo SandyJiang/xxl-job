@@ -257,7 +257,7 @@ public class SampleXxlJob {
         return ReturnT.SUCCESS;
     }
     public void init(){
-        if(pool == null){
+        if(pool == null || pool.isTerminated()){
             pool = new ThreadPoolExecutor(5, 10, 5000,
                     TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(1000),
                     Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
