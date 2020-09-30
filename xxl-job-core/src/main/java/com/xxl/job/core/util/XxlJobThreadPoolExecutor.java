@@ -323,7 +323,7 @@ import java.util.*;
  */
 
 /**
- * 相比原版增加强制关闭方法shutdownForce().
+ * 相比jdk1.8原版增加强制关闭方法shutdownForce().
  */
 public class XxlJobThreadPoolExecutor extends AbstractExecutorService {
     /**
