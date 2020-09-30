@@ -238,7 +238,10 @@ public class SampleXxlJob {
         XxlJobLogger.log("XXL-JOB, Hello World.");
         for(int i=0; i<8;i++){
             pool.submit(() -> {
-                for(int j=0; j<10000; j++){
+                for(int j=0; j<10000000; j++){
+                    if(Thread.currentThread().isInterrupted()){
+                        break;
+                    }
                     XxlJobLogger.log("beat at:" + j);
                     System.out.println("hello");
                 }
@@ -265,6 +268,7 @@ public class SampleXxlJob {
         logger.info("init");
     }
     public void destroy(){
+        //线程池并没有提供粗暴关闭的方法,只能在线程池任务判断interrupt状态
         pool.shutdownNow();
         pool = null;
         logger.info("destory");
