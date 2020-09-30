@@ -196,9 +196,9 @@ $(function() {
 										'     <ul class="dropdown-menu" role="menu" _id="'+ row.id +'" >\n' +
 										'       <li><a href="javascript:void(0);" class="logDetail" _id="'+ row.id +'" >'+ I18n.joblog_rolling_log +'</a></li>\n' +
 										'       <li class="divider"></li>\n' +
-										'       <li><a href="javascript:void(0);" class="logKill" _id="'+ row.id +'" >'+ I18n.joblog_kill_log +'</a></li>\n' +
-										'       <li class="divider"></li>\n' +
 										'       <li><a href="javascript:void(0);" class="logStop" _id="'+ row.id +'" >'+ I18n.joblog_stop_log +'</a></li>\n' +
+										'       <li class="divider"></li>\n' +
+										'       <li><a href="javascript:void(0);" class="logKill" _id="'+ row.id +'" >'+ I18n.joblog_kill_log +'</a></li>\n' +
 										'     </ul>\n' +
 										'   </div>';
 
