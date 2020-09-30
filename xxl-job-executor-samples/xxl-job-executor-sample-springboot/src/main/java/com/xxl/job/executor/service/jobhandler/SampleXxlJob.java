@@ -5,6 +5,7 @@ import com.xxl.job.core.handler.IJobHandler;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import com.xxl.job.core.log.XxlJobLogger;
 import com.xxl.job.core.util.ShardingUtil;
+import com.xxl.job.core.util.XxlJobThreadPoolExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -277,8 +278,59 @@ public class SampleXxlJob {
      */
     public void destroy(){
         //线程池并没有提供粗暴关闭的方法,只能在线程池任务判断interrupt状态
+        //如果一定要强制关闭,请使用本项目里的XxlJobThreadPoolExecutor.shutdownFore();
         pool.shutdownNow();
         pool = null;
+        logger.info("destory");
+    }
+
+    private volatile static XxlJobThreadPoolExecutor xxlJobPool = null;
+
+    /**
+     * 6、生命周期任务示例：任务初始化与销毁时，支持自定义相关逻辑；
+     * 线程池示例
+     * 使用本项目里的XxlJobThreadPoolExecutor强制关闭线程池
+     */
+    @XxlJob(value = "demoJobHandlerShutdownForce", init = "initShutdownForce", destroy = "destroyShutdownForce")
+    public ReturnT<String> demoJobHandlerShutdownForce(String param) throws Exception {
+        XxlJobLogger.log("XXL-JOB, Hello World.");
+        for(int i=0; i<8;i++){
+            xxlJobPool.submit(() -> {
+                for(int j=0; j<10000000; j++){
+                    XxlJobLogger.log("beat at:" + j);
+                    System.out.println("hello");
+                }
+            });
+
+        }
+        boolean done = false;
+        do{
+            done = xxlJobPool.getTaskCount() == xxlJobPool.getCompletedTaskCount();
+        }while (!done);
+        System.out.println("任务结束");
+        return ReturnT.SUCCESS;
+    }
+
+    /**
+     * init方法会在程序运行前被调用
+     */
+    public void initShutdownForce(){
+        if(xxlJobPool == null || xxlJobPool.isTerminated()){
+            xxlJobPool = new XxlJobThreadPoolExecutor(5, 10, 5000,
+                    TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(),
+                    Executors.defaultThreadFactory(), new XxlJobThreadPoolExecutor.CallerRunsPolicy());
+        }
+        logger.info("init");
+    }
+
+    /**
+     * 但destroy并不会在主程序运行完被调用,destroy只能在手工停止时候调用
+     */
+    public void destroyShutdownForce(){
+        //线程池并没有提供粗暴关闭的方法,只能在线程池任务判断interrupt状态
+        //如果一定要强制关闭,请使用本项目里的XxlJobThreadPoolExecutor.shutdownFore();
+        xxlJobPool.shutdownForce();
+        xxlJobPool = null;
         logger.info("destory");
     }
 
