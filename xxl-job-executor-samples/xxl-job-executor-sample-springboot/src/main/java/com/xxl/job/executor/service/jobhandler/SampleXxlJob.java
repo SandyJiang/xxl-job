@@ -259,6 +259,10 @@ public class SampleXxlJob {
         System.out.println("任务结束");
         return ReturnT.SUCCESS;
     }
+
+    /**
+     * init方法会在程序运行前被调用
+     */
     public void init(){
         if(pool == null || pool.isTerminated()){
             pool = new ThreadPoolExecutor(5, 10, 5000,
@@ -267,6 +271,10 @@ public class SampleXxlJob {
         }
         logger.info("init");
     }
+
+    /**
+     * 但destroy并不会在主程序运行完被调用,destroy只能在手工停止时候调用
+     */
     public void destroy(){
         //线程池并没有提供粗暴关闭的方法,只能在线程池任务判断interrupt状态
         pool.shutdownNow();
