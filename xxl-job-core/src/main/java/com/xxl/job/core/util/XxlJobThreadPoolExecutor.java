@@ -321,6 +321,10 @@ import java.util.*;
  * @since 1.5
  * @author Doug Lea
  */
+
+/**
+ * 相比原版增加强制关闭方法shutdownForce().
+ */
 public class XxlJobThreadPoolExecutor extends AbstractExecutorService {
     /**
      * The main pool control state, ctl, is an atomic integer packing
